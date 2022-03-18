@@ -1,7 +1,7 @@
-import { CSharpRenderer } from '../CSharpRenderer';
-import { EnumPreset } from '../../../models';
-import { pascalCase } from 'change-case';
-import { FormatHelpers } from '../../../helpers';
+import {CSharpRenderer} from '../CSharpRenderer';
+import {EnumPreset} from '../../../models';
+import {pascalCase} from 'change-case';
+import {FormatHelpers} from '../../../helpers';
 
 /**
  * Renderer for C#'s `enum` type

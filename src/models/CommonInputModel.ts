@@ -1,4 +1,4 @@
-import { CommonModel } from './CommonModel';
+import {CommonModel} from './CommonModel';
 
 /**
  * This class is the wrapper for simplified models and the rest of the context needed for further generate typed models.

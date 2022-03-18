@@ -1,9 +1,9 @@
-import {parse, AsyncAPIDocument, Schema as AsyncAPISchema, ParserOptions} from '@asyncapi/parser';
+import { AsyncAPIDocument, parse, ParserOptions, Schema as AsyncAPISchema } from '@asyncapi/parser';
 import { AbstractInputProcessor } from './AbstractInputProcessor';
 import { JsonSchemaInputProcessor } from './JsonSchemaInputProcessor';
-import { CommonInputModel, ProcessorOptions } from '../models';
-import { Logger } from '../utils';
-import { AsyncapiV2Schema } from '../models/AsyncapiV2Schema';
+import { CommonInputModel, ProcessorOptions } from '@models';
+import { Logger } from '@utils';
+import { AsyncapiV2Schema } from '@models';
 
 /**
  * Class for processing AsyncAPI inputs
@@ -32,7 +32,7 @@ export class AsyncAPIInputProcessor extends AbstractInputProcessor {
     for (const [, message] of doc.allMessages()) {
       const schema = AsyncAPIInputProcessor.convertToInternalSchema(message.payload());
       const commonModels = JsonSchemaInputProcessor.convertSchemaToCommonModel(schema);
-      common.models = {...common.models, ...commonModels};
+      common.models = { ...common.models, ...commonModels };
     }
     return common;
   }

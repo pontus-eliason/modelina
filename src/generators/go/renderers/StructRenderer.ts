@@ -1,5 +1,5 @@
-import { GoRenderer } from '../GoRenderer';
-import { FieldType, StructPreset } from '../GoPreset';
+import {GoRenderer} from '../GoRenderer';
+import {FieldType, StructPreset} from '../GoPreset';
 
 /**
  * Renderer for Go's `struct` type

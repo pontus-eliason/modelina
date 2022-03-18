@@ -1,8 +1,8 @@
-import { JavaScriptGenerator, JavaScriptRenderCompleteModelOptions } from './';
-import { CommonInputModel, OutputModel } from '../../models';
+import {JavaScriptGenerator, JavaScriptRenderCompleteModelOptions} from './';
+import {CommonInputModel, OutputModel} from '../../models';
 import * as path from 'path';
-import { AbstractFileGenerator } from '../AbstractFileGenerator';
-import { FileHelpers } from '../../helpers';
+import {AbstractFileGenerator} from '../AbstractFileGenerator';
+import {FileHelpers} from '../../helpers';
 
 export class JavaScriptFileGenerator extends JavaScriptGenerator implements AbstractFileGenerator<JavaScriptRenderCompleteModelOptions> {
   /**

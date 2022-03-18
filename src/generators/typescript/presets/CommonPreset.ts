@@ -1,7 +1,7 @@
-import { TypeScriptRenderer } from '../TypeScriptRenderer';
-import { TypeScriptPreset } from '../TypeScriptPreset';
-import { getUniquePropertyName, DefaultPropertyNames, TypeHelpers, ModelKind } from '../../../helpers';
-import { CommonInputModel, CommonModel } from '../../../models';
+import {TypeScriptRenderer} from '../TypeScriptRenderer';
+import {TypeScriptPreset} from '../TypeScriptPreset';
+import {DefaultPropertyNames, getUniquePropertyName, ModelKind, TypeHelpers} from '../../../helpers';
+import {CommonInputModel, CommonModel} from '../../../models';
 import renderExampleFunction from './utils/ExampleFunction';
 
 export interface TypeScriptCommonPresetOptions {

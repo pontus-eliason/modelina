@@ -1,7 +1,7 @@
 import { AbstractInputProcessor } from './AbstractInputProcessor';
 import { JsonSchemaInputProcessor } from './JsonSchemaInputProcessor';
-import { CommonInputModel, OpenapiV3Schema } from '../models';
-import { Logger } from '../utils';
+import { CommonInputModel, OpenapiV3Schema } from '@models';
+import { Logger } from '@utils';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 
@@ -90,7 +90,7 @@ export class OpenAPIInputProcessor extends AbstractInputProcessor {
   private includeSchema(schema: OpenAPIV3.SchemaObject, name: string, inputModel: CommonInputModel) {
     const internalSchema = OpenAPIInputProcessor.convertToInternalSchema(schema, name);
     const commonModels = JsonSchemaInputProcessor.convertSchemaToCommonModel(internalSchema);
-    inputModel.models = {...inputModel.models, ...commonModels};
+    inputModel.models = { ...inputModel.models, ...commonModels };
   }
 
   /**

@@ -1,8 +1,8 @@
-import { CSharpRenderer } from '../CSharpRenderer';
-import { CommonModel, PropertyType } from '../../../models';
-import { DefaultPropertyNames, getUniquePropertyName } from '../../../helpers';
-import { pascalCase } from 'change-case';
-import { CsharpClassPreset } from '../CSharpPreset';
+import {CSharpRenderer} from '../CSharpRenderer';
+import {CommonModel, PropertyType} from '../../../models';
+import {DefaultPropertyNames, getUniquePropertyName} from '../../../helpers';
+import {pascalCase} from 'change-case';
+import {CsharpClassPreset} from '../CSharpPreset';
 
 /**
  * Renderer for CSharp's `struct` type

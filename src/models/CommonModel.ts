@@ -1,4 +1,4 @@
-import { Logger } from '../utils';
+import { Logger } from '@utils';
 
 /**
  * Common internal representation for a model.
@@ -19,7 +19,7 @@ export class CommonModel {
 
   /**
    * Takes a deep copy of the input object and converts it to an instance of CommonModel.
-   * 
+   *
    * @param object to transform
    * @returns CommonModel instance of the object
    */
@@ -65,7 +65,7 @@ export class CommonModel {
 
   /**
    * Retrieves data from originalInput by given key
-   * 
+   *
    * @param key given key
    * @returns {any}
    */
@@ -77,7 +77,7 @@ export class CommonModel {
 
   /**
    * Set the types of the model
-   * 
+   *
    * @param type
    */
   setType(type : string | string[] | undefined): void {
@@ -89,14 +89,14 @@ export class CommonModel {
         this.type = type[0];
         return;
       }
-    } 
+    }
     this.type = type;
   }
-  
+
   /**
    * Removes type(s) from model type
-   * 
-   * @param types 
+   *
+   * @param types
    */
   removeType(typesToRemove : string | string[]): void {
     if (Array.isArray(typesToRemove)) {
@@ -116,9 +116,9 @@ export class CommonModel {
 
   /**
    * Adds types to the existing model types.
-   * 
+   *
    * Makes sure to only keep a single type incase of duplicates.
-   * 
+   *
    * @param types which types we should try and add to the existing output
    */
   addTypes(types: string[] | string): void {
@@ -137,7 +137,7 @@ export class CommonModel {
 
   /**
    * Checks if given property name is required in object
-   * 
+   *
    * @param propertyName given property name
    * @returns {boolean}
    */
@@ -150,10 +150,10 @@ export class CommonModel {
 
   /**
    * Adds an item to the model.
-   * 
+   *
    * If items already exist the two are merged.
-   * 
-   * @param itemModel 
+   *
+   * @param itemModel
    * @param originalInput corresponding input that got interpreted to this model
    */
   addItem(itemModel: CommonModel, originalInput: any): void {
@@ -167,12 +167,12 @@ export class CommonModel {
 
   /**
    * Adds a tuple to the model.
-   * 
+   *
    * If a item already exist it will be merged.
-   * 
-   * @param tupleModel 
+   *
+   * @param tupleModel
    * @param originalInput corresponding input that got interpreted to this model
-   * @param index 
+   * @param index
    */
   addItemTuple(tupleModel: CommonModel, originalInput: any, index: number): void {
     let modelItems = this.items;
@@ -192,10 +192,10 @@ export class CommonModel {
 
   /**
    * Add enum value to the model.
-   * 
+   *
    * Ensures no duplicates are added.
-   * 
-   * @param enumValue 
+   *
+   * @param enumValue
    */
   addEnum(enumValue: any): void {
     if (this.enum === undefined) {this.enum = [];}
@@ -206,8 +206,8 @@ export class CommonModel {
 
   /**
    * Remove enum from model.
-   * 
-   * @param enumValue 
+   *
+   * @param enumValue
    */
   removeEnum(enumsToRemove: any | any[]): void {
     if (this.enum === undefined || enumsToRemove === undefined) {return;}
@@ -230,9 +230,9 @@ export class CommonModel {
   /**
    * Adds a property to the model.
    * If the property already exist the two are merged.
-   * 
-   * @param propertyName 
-   * @param propertyModel 
+   *
+   * @param propertyName
+   * @param propertyModel
    * @param originalInput corresponding input that got interpreted to this model
    */
   addProperty(propertyName: string, propertyModel: CommonModel, originalInput: any): void {
@@ -248,8 +248,8 @@ export class CommonModel {
   /**
    * Adds additionalProperty to the model.
    * If another model already exist the two are merged.
-   * 
-   * @param additionalPropertiesModel 
+   *
+   * @param additionalPropertiesModel
    * @param originalInput corresponding input that got interpreted to this model corresponding input that got interpreted to this model
    */
   addAdditionalProperty(additionalPropertiesModel: CommonModel, originalInput: any): void {
@@ -264,9 +264,9 @@ export class CommonModel {
   /**
    * Adds additionalItems to the model.
    * If another model already exist the two are merged.
-   * 
-   * @param additionalItemsModel 
-   * @param originalInput corresponding input that got interpreted to this model 
+   *
+   * @param additionalItemsModel
+   * @param originalInput corresponding input that got interpreted to this model
    */
   addAdditionalItems(additionalItemsModel: CommonModel, originalInput: any): void {
     if (this.additionalItems !== undefined) {
@@ -276,14 +276,14 @@ export class CommonModel {
       this.additionalItems = additionalItemsModel;
     }
   }
-  
+
   /**
    * Adds a patternProperty to the model.
    * If the pattern already exist the two models are merged.
-   * 
-   * @param pattern 
-   * @param patternModel 
-   * @param originalInput corresponding input that got interpreted to this model 
+   *
+   * @param pattern
+   * @param patternModel
+   * @param originalInput corresponding input that got interpreted to this model
    */
   addPatternProperty(pattern: string, patternModel: CommonModel, originalInput: any): void {
     if (this.patternProperties === undefined) {this.patternProperties = {};}
@@ -294,13 +294,13 @@ export class CommonModel {
       this.patternProperties[String(pattern)] = patternModel;
     }
   }
-  
+
   /**
    * Adds another model this model should extend.
-   * 
+   *
    * It is only allowed to extend if the other model have $id and is not already being extended.
-   * 
-   * @param extendedModel 
+   *
+   * @param extendedModel
    */
   addExtendedModel(extendedModel: CommonModel): void {
     if (extendedModel.$id === undefined) {
@@ -308,7 +308,7 @@ export class CommonModel {
       return;
     }
     this.extend = this.extend || [];
-    if (this.extend.includes(extendedModel.$id)) { 
+    if (this.extend.includes(extendedModel.$id)) {
       Logger.info(`${this.$id} model already extends model ${extendedModel.$id}.`, this, extendedModel);
       return;
     }
@@ -355,11 +355,11 @@ export class CommonModel {
   }
 
   /**
-   * Merge two common model properties together 
-   * 
-   * @param mergeTo 
-   * @param mergeFrom 
-   * @param originalInput corresponding input that got interpreted to this model 
+   * Merge two common model properties together
+   *
+   * @param mergeTo
+   * @param mergeFrom
+   * @param originalInput corresponding input that got interpreted to this model
    * @param alreadyIteratedModels
    */
   private static mergeProperties(mergeTo: CommonModel, mergeFrom: CommonModel, originalInput: any, alreadyIteratedModels: Map<CommonModel, CommonModel> = new Map()) {
@@ -381,11 +381,11 @@ export class CommonModel {
     }
   }
   /**
-   * Merge two common model additionalProperties together 
-   * 
-   * @param mergeTo 
-   * @param mergeFrom 
-   * @param originalInput corresponding input that got interpreted to this model 
+   * Merge two common model additionalProperties together
+   *
+   * @param mergeTo
+   * @param mergeFrom
+   * @param originalInput corresponding input that got interpreted to this model
    * @param alreadyIteratedModels
    */
   private static mergeAdditionalProperties(mergeTo: CommonModel, mergeFrom: CommonModel, originalInput: any, alreadyIteratedModels: Map<CommonModel, CommonModel> = new Map()) {
@@ -401,11 +401,11 @@ export class CommonModel {
     }
   }
   /**
-   * Merge two common model additionalItems together 
-   * 
-   * @param mergeTo 
-   * @param mergeFrom 
-   * @param originalInput corresponding input that got interpreted to this model 
+   * Merge two common model additionalItems together
+   *
+   * @param mergeTo
+   * @param mergeFrom
+   * @param originalInput corresponding input that got interpreted to this model
    * @param alreadyIteratedModels
    */
   private static mergeAdditionalItems(mergeTo: CommonModel, mergeFrom: CommonModel, originalInput: any, alreadyIteratedModels: Map<CommonModel, CommonModel> = new Map()) {
@@ -421,11 +421,11 @@ export class CommonModel {
     }
   }
   /**
-   * Merge two common model pattern properties together 
-   * 
-   * @param mergeTo 
-   * @param mergeFrom 
-   * @param originalInput corresponding input that got interpreted to this model 
+   * Merge two common model pattern properties together
+   *
+   * @param mergeTo
+   * @param mergeFrom
+   * @param originalInput corresponding input that got interpreted to this model
    * @param alreadyIteratedModels
    */
   private static mergePatternProperties(mergeTo: CommonModel, mergeFrom: CommonModel, originalInput: any, alreadyIteratedModels: Map<CommonModel, CommonModel> = new Map()) {
@@ -449,10 +449,10 @@ export class CommonModel {
 
   /**
    * Merge items together, prefer tuples over simple array since it is more strict.
-   * 
-   * @param mergeTo 
-   * @param mergeFrom 
-   * @param originalInput corresponding input that got interpreted to this model 
+   *
+   * @param mergeTo
+   * @param mergeFrom
+   * @param originalInput corresponding input that got interpreted to this model
    * @param alreadyIteratedModels
    */
   // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -467,13 +467,13 @@ export class CommonModel {
 
     //mergeFrom and mergeTo is not tuple
     if (!Array.isArray(mergeFrom.items) && !Array.isArray(mergeToItems)) {
-      mergeTo.items = CommonModel.mergeCommonModels(mergeToItems, mergeFrom.items, originalInput, alreadyIteratedModels); 
+      mergeTo.items = CommonModel.mergeCommonModels(mergeToItems, mergeFrom.items, originalInput, alreadyIteratedModels);
     }
 
     //mergeFrom and mergeTo is tuple
     if (Array.isArray(mergeFrom.items) && Array.isArray(mergeToItems)) {
       for (const [index, mergeFromTupleModel] of mergeFrom.items.entries()) {
-        (mergeTo.items as CommonModel[])[Number(index)] = CommonModel.mergeCommonModels(mergeToItems[Number(index)], mergeFromTupleModel, originalInput, alreadyIteratedModels); 
+        (mergeTo.items as CommonModel[])[Number(index)] = CommonModel.mergeCommonModels(mergeToItems[Number(index)], mergeFromTupleModel, originalInput, alreadyIteratedModels);
       }
     }
 
@@ -486,9 +486,9 @@ export class CommonModel {
 
   /**
    * Merge types together
-   * 
-   * @param mergeTo 
-   * @param mergeFrom 
+   *
+   * @param mergeTo
+   * @param mergeFrom
    */
   private static mergeTypes(mergeTo: CommonModel, mergeFrom: CommonModel) {
     //Only add the types that do not already exist
@@ -516,10 +516,10 @@ export class CommonModel {
 
   /**
    * Only merge if left side is undefined and right side is sat OR both sides are defined
-   * 
-   * @param mergeTo 
-   * @param mergeFrom 
-   * @param originalInput corresponding input that got interpreted to this model 
+   *
+   * @param mergeTo
+   * @param mergeFrom
+   * @param originalInput corresponding input that got interpreted to this model
    * @param alreadyIteratedModels
    */
   static mergeCommonModels(mergeTo: CommonModel | undefined, mergeFrom: CommonModel, originalInput: any, alreadyIteratedModels: Map<CommonModel, CommonModel> = new Map()): CommonModel {

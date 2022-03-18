@@ -1,8 +1,8 @@
-import { AbstractRenderer } from '../AbstractRenderer';
-import { JavaGenerator, JavaOptions } from './JavaGenerator';
-import { CommonModel, CommonInputModel, Preset } from '../../models';
-import { FormatHelpers, ModelKind, TypeHelpers } from '../../helpers';
-import { isReservedJavaKeyword } from './Constants';
+import {AbstractRenderer} from '../AbstractRenderer';
+import {JavaGenerator, JavaOptions} from './JavaGenerator';
+import {CommonInputModel, CommonModel, Preset} from '../../models';
+import {FormatHelpers, ModelKind, TypeHelpers} from '../../helpers';
+import {isReservedJavaKeyword} from './Constants';
 
 /**
  * Common renderer for Java types

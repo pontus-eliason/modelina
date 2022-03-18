@@ -1,10 +1,10 @@
-import { AbstractRenderer } from '../AbstractRenderer';
-import { TypeScriptGenerator, TypeScriptOptions } from './TypeScriptGenerator';
+import {AbstractRenderer} from '../AbstractRenderer';
+import {TypeScriptGenerator, TypeScriptOptions} from './TypeScriptGenerator';
 
-import { FormatHelpers } from '../../helpers';
-import { CommonModel, CommonInputModel, Preset, PropertyType } from '../../models';
-import { DefaultPropertyNames, getUniquePropertyName } from '../../helpers/NameHelpers';
-import { isReservedTypeScriptKeyword } from './Constants';
+import {FormatHelpers} from '../../helpers';
+import {CommonInputModel, CommonModel, Preset, PropertyType} from '../../models';
+import {DefaultPropertyNames, getUniquePropertyName} from '../../helpers/NameHelpers';
+import {isReservedTypeScriptKeyword} from './Constants';
 
 /**
  * Common renderer for TypeScript types

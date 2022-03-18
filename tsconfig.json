@@ -2,6 +2,22 @@
   "compilerOptions": {
     "outDir": "./lib/cjs",
     "baseUrl": "./src",
+    "paths": {
+      "@generators/*": ["generators/*"],
+      "@generators": ["generators"],
+      "@helpers/*": ["helpers/*"],
+      "@helpers": ["helpers"],
+      "@interpreter/*": ["interpreter/*"],
+      "@interpreter": ["interpreter"],
+      "@models/*": ["models/*"],
+      "@models": ["models"],
+      "@processors/*": ["processors/*"],
+      "@processors": ["processors"],
+      "@utils/*": ["utils/*"],
+      "@utils": ["utils"],
+      "@cst/*": ["cst/*"],
+      "@cst": ["cst"]
+    },
     "declaration": false,
     "target": "es6",
     "lib": [
@@ -21,7 +37,7 @@
     "isolatedModules": true
   },
   "include": [
-    "src/**/*.ts",
+    "src/**/*.ts"
   ],
   "exclude": ["node_modules", "lib", "examples"]
 }

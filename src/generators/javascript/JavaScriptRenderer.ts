@@ -1,8 +1,8 @@
-import { AbstractRenderer } from '../AbstractRenderer';
-import { JavaScriptGenerator, JavaScriptOptions } from './JavaScriptGenerator';
-import { getUniquePropertyName, FormatHelpers, DefaultPropertyNames } from '../../helpers';
-import { CommonModel, CommonInputModel, Preset, PropertyType } from '../../models';
-import { isReservedJavaScriptKeyword } from './Constants';
+import {AbstractRenderer} from '../AbstractRenderer';
+import {JavaScriptGenerator, JavaScriptOptions} from './JavaScriptGenerator';
+import {DefaultPropertyNames, FormatHelpers, getUniquePropertyName} from '../../helpers';
+import {CommonInputModel, CommonModel, Preset, PropertyType} from '../../models';
+import {isReservedJavaScriptKeyword} from './Constants';
 
 /**
  * Common renderer for JavaScript types

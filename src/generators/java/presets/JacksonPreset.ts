@@ -1,5 +1,5 @@
-import { PropertyType } from '../../../models';
-import { JavaPreset } from '../JavaPreset';
+import {PropertyType} from '../../../models';
+import {JavaPreset} from '../JavaPreset';
 
 /**
  * Preset which adds `com.fasterxml.jackson` related annotations to class's property getters.

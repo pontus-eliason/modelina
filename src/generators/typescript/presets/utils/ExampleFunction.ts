@@ -1,5 +1,5 @@
-import { TypeScriptRenderer } from '../../TypeScriptRenderer';
-import { CommonModel } from '../../../../models';
+import {TypeScriptRenderer} from '../../TypeScriptRenderer';
+import {CommonModel} from '../../../../models';
 
 /**
  * Inferring first acceptable value from the model.

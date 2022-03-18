@@ -1,16 +1,13 @@
-import {
-  AbstractGenerator,
-  CommonGeneratorOptions,
-  defaultGeneratorOptions
-} from '../AbstractGenerator';
-import { CommonModel, CommonInputModel, RenderOutput } from '../../models';
-import { TypeHelpers, ModelKind, FormatHelpers } from '../../helpers';
-import { GoPreset, GO_DEFAULT_PRESET } from './GoPreset';
-import { StructRenderer } from './renderers/StructRenderer';
-import { EnumRenderer } from './renderers/EnumRenderer';
-import { pascalCaseTransformMerge } from 'change-case';
-import { Logger } from '../../utils/LoggingInterface';
-import { isReservedGoKeyword } from './Constants';
+import {AbstractGenerator, CommonGeneratorOptions, defaultGeneratorOptions} from '../AbstractGenerator';
+import {CommonInputModel, CommonModel, RenderOutput} from '../../models';
+import {FormatHelpers, ModelKind, TypeHelpers} from '../../helpers';
+import {GO_DEFAULT_PRESET, GoPreset} from './GoPreset';
+import {StructRenderer} from './renderers/StructRenderer';
+import {EnumRenderer} from './renderers/EnumRenderer';
+import {pascalCaseTransformMerge} from 'change-case';
+import {Logger} from '../../utils/LoggingInterface';
+import {isReservedGoKeyword} from './Constants';
+
 /**
  * The Go naming convention type
  */

@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+
 export class FileHelpers {
   /**
    * Node specific file writer, which writes the content to the specified filepath.

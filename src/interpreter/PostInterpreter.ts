@@ -1,6 +1,7 @@
-import { CommonModel } from '../models';
-import { Logger } from '../utils';
+import { CommonModel } from '@models';
+import { Logger } from '@utils';
 import { isEnum, isModelObject } from './Utils';
+
 /**
  * Post process the interpreted model. By applying the following:
  * - Ensure models are split as required

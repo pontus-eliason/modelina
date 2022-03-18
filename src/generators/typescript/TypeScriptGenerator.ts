@@ -1,15 +1,11 @@
-import { 
-  AbstractGenerator, 
-  CommonGeneratorOptions,
-  defaultGeneratorOptions
-} from '../AbstractGenerator';
-import { CommonModel, CommonInputModel, RenderOutput } from '../../models';
-import { TypeHelpers, ModelKind, CommonNamingConvention, CommonNamingConventionImplementation } from '../../helpers';
-import { TypeScriptPreset, TS_DEFAULT_PRESET } from './TypeScriptPreset';
-import { ClassRenderer } from './renderers/ClassRenderer';
-import { InterfaceRenderer } from './renderers/InterfaceRenderer';
-import { EnumRenderer } from './renderers/EnumRenderer';
-import { TypeRenderer } from './renderers/TypeRenderer';
+import {AbstractGenerator, CommonGeneratorOptions, defaultGeneratorOptions} from '../AbstractGenerator';
+import {CommonInputModel, CommonModel, RenderOutput} from '../../models';
+import {CommonNamingConvention, CommonNamingConventionImplementation, ModelKind, TypeHelpers} from '../../helpers';
+import {TS_DEFAULT_PRESET, TypeScriptPreset} from './TypeScriptPreset';
+import {ClassRenderer} from './renderers/ClassRenderer';
+import {InterfaceRenderer} from './renderers/InterfaceRenderer';
+import {EnumRenderer} from './renderers/EnumRenderer';
+import {TypeRenderer} from './renderers/TypeRenderer';
 
 export interface TypeScriptOptions extends CommonGeneratorOptions<TypeScriptPreset> {
   renderTypes?: boolean;

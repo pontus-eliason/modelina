@@ -1,6 +1,6 @@
-import { CommonModel } from '../../../models';
-import { TypeScriptPreset } from '../TypeScriptPreset';
-import { TypeScriptRenderer } from '../TypeScriptRenderer';
+import {CommonModel} from '../../../models';
+import {TypeScriptPreset} from '../TypeScriptPreset';
+import {TypeScriptRenderer} from '../TypeScriptRenderer';
 
 const renderDescription = ({
   renderer,

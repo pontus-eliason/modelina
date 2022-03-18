@@ -1,4 +1,4 @@
-import { CommonModel } from '../models/CommonModel';
+import { CommonModel } from '@models';
 
 /**
  * Check if CommonModel is an enum

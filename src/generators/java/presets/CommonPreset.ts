@@ -1,8 +1,8 @@
-import { JavaRenderer } from '../JavaRenderer';
-import { JavaPreset } from '../JavaPreset';
+import {JavaRenderer} from '../JavaRenderer';
+import {JavaPreset} from '../JavaPreset';
 
-import { getUniquePropertyName, DefaultPropertyNames, FormatHelpers } from '../../../helpers';
-import { CommonModel } from '../../../models';
+import {DefaultPropertyNames, FormatHelpers, getUniquePropertyName} from '../../../helpers';
+import {CommonModel} from '../../../models';
 import {Logger} from '../../../utils/LoggingInterface';
 
 export interface JavaCommonPresetOptions {

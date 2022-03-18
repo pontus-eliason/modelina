@@ -1,4 +1,5 @@
-import { isReservedJavaScriptKeyword } from '../javascript/Constants';
+import {isReservedJavaScriptKeyword} from '../javascript/Constants';
+
 export const RESERVED_TYPESCRIPT_KEYWORDS = [
   'break',
   'case',

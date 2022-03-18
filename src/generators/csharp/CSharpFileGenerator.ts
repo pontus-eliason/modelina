@@ -1,8 +1,8 @@
-import { CSharpGenerator, CSharpRenderCompleteModelOptions } from './';
-import { CommonInputModel, OutputModel } from '../../models';
+import {CSharpGenerator, CSharpRenderCompleteModelOptions} from './';
+import {CommonInputModel, OutputModel} from '../../models';
 import * as path from 'path';
-import { AbstractFileGenerator } from '../AbstractFileGenerator';
-import { FileHelpers } from '../../helpers';
+import {AbstractFileGenerator} from '../AbstractFileGenerator';
+import {FileHelpers} from '../../helpers';
 
 export class CSharpFileGenerator extends CSharpGenerator implements AbstractFileGenerator<CSharpRenderCompleteModelOptions> {
   /**

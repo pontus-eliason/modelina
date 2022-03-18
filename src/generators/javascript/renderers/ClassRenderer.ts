@@ -1,7 +1,7 @@
-import { JavaScriptRenderer } from '../JavaScriptRenderer';
+import {JavaScriptRenderer} from '../JavaScriptRenderer';
 
-import { CommonModel, ClassPreset, PropertyType } from '../../../models';
-import { DefaultPropertyNames, FormatHelpers, getUniquePropertyName } from '../../../helpers';
+import {ClassPreset, CommonModel, PropertyType} from '../../../models';
+import {DefaultPropertyNames, FormatHelpers, getUniquePropertyName} from '../../../helpers';
 
 /**
  * Renderer for JavaScript's `class` type

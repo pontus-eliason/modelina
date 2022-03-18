@@ -1,7 +1,7 @@
 import { AbstractInputProcessor } from './AbstractInputProcessor';
 import { AsyncAPIInputProcessor } from './AsyncAPIInputProcessor';
 import { JsonSchemaInputProcessor } from './JsonSchemaInputProcessor';
-import { ProcessorOptions, CommonInputModel } from '../models';
+import { CommonInputModel, ProcessorOptions } from '@models';
 import { SwaggerInputProcessor } from './SwaggerInputProcessor';
 import { OpenAPIInputProcessor } from './OpenAPIInputProcessor';
 import { TypeScriptInputProcessor } from './TypeScriptInputProcessor';

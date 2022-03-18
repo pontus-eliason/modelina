@@ -1,5 +1,5 @@
-import { FormatHelpers } from '../helpers';
-import { CommonInputModel, CommonModel } from '../models';
+import { FormatHelpers } from '@helpers';
+import { CommonInputModel, CommonModel } from '@models';
 
 /**
  * Default property names for different aspects of the common model

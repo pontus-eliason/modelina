@@ -1,4 +1,4 @@
-import { CommonInputModel, ProcessorOptions } from '../models';
+import { CommonInputModel, ProcessorOptions } from '@models';
 import { resolve } from 'path';
 import ts from 'typescript';
 import * as TJS from 'typescript-json-schema';
@@ -82,7 +82,7 @@ export class TypeScriptInputProcessor extends AbstractInputProcessor {
     if (generatedSchemas) {
       for (const schema of generatedSchemas) {
         const commonModels = JsonSchemaInputProcessor.convertSchemaToCommonModel(schema as Record<string, any>);
-        common.models = {...common.models, ...commonModels };
+        common.models = { ...common.models, ...commonModels };
       }
     }
     return Promise.resolve(common);

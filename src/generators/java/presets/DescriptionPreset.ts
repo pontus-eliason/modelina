@@ -1,7 +1,7 @@
-import { JavaRenderer } from '../JavaRenderer';
-import { JavaPreset } from '../JavaPreset';
-import { FormatHelpers } from '../../../helpers';
-import { CommonModel } from '../../../models';
+import {JavaRenderer} from '../JavaRenderer';
+import {JavaPreset} from '../JavaPreset';
+import {FormatHelpers} from '../../../helpers';
+import {CommonModel} from '../../../models';
 
 function renderDescription({ renderer, content, item }: {
   renderer: JavaRenderer,

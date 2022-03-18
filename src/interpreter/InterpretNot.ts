@@ -1,6 +1,5 @@
-
-import { Logger } from '../utils';
-import { CommonModel } from '../models/CommonModel';
+import { Logger } from '@utils';
+import { CommonModel } from '@models';
 import { Interpreter, InterpreterOptions, InterpreterSchemaType } from './Interpreter';
 
 /**

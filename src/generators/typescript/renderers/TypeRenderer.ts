@@ -1,6 +1,6 @@
-import { TypeScriptRenderer } from '../TypeScriptRenderer';
-import { TypePreset } from '../TypeScriptPreset';
-import { TypeHelpers, ModelKind } from '../../../helpers';
+import {TypeScriptRenderer} from '../TypeScriptRenderer';
+import {TypePreset} from '../TypeScriptPreset';
+import {ModelKind, TypeHelpers} from '../../../helpers';
 
 /**
  * Renderer for TypeScript's `type` type

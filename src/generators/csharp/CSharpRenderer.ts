@@ -1,8 +1,8 @@
-import { AbstractRenderer } from '../AbstractRenderer';
-import { CSharpGenerator, CSharpOptions } from './CSharpGenerator';
-import { CommonModel, CommonInputModel, Preset, PropertyType } from '../../models';
-import { FormatHelpers } from '../../helpers/FormatHelpers';
-import { isReservedCSharpKeyword } from './Constants';
+import {AbstractRenderer} from '../AbstractRenderer';
+import {CSharpGenerator, CSharpOptions} from './CSharpGenerator';
+import {CommonInputModel, CommonModel, Preset, PropertyType} from '../../models';
+import {FormatHelpers} from '../../helpers/FormatHelpers';
+import {isReservedCSharpKeyword} from './Constants';
 
 /**
  * Common renderer for CSharp types

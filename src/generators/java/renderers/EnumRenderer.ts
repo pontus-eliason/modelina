@@ -1,6 +1,6 @@
-import { JavaRenderer } from '../JavaRenderer';
-import { EnumPreset} from '../../../models';
-import { FormatHelpers } from '../../../helpers';
+import {JavaRenderer} from '../JavaRenderer';
+import {EnumPreset} from '../../../models';
+import {FormatHelpers} from '../../../helpers';
 
 /**
  * Renderer for Java's `enum` type

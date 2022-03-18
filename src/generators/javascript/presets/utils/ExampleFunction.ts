@@ -1,5 +1,5 @@
-import { JavaScriptRenderer } from '../../JavaScriptRenderer';
-import { CommonModel } from '../../../../models';
+import {JavaScriptRenderer} from '../../JavaScriptRenderer';
+import {CommonModel} from '../../../../models';
 
 export function renderValueFromModel(model: CommonModel, renderer: JavaScriptRenderer): string | undefined {
   if (model.$ref !== undefined) {

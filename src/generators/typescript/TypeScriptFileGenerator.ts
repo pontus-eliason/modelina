@@ -1,8 +1,8 @@
-import { TypeScriptGenerator, TypeScriptRenderCompleteModelOptions } from './';
-import { CommonInputModel, OutputModel } from '../../models';
+import {TypeScriptGenerator, TypeScriptRenderCompleteModelOptions} from './';
+import {CommonInputModel, OutputModel} from '../../models';
 import * as path from 'path';
-import { AbstractFileGenerator } from '../AbstractFileGenerator';
-import { FileHelpers } from '../../helpers';
+import {AbstractFileGenerator} from '../AbstractFileGenerator';
+import {FileHelpers} from '../../helpers';
 
 export class TypeScriptFileGenerator extends TypeScriptGenerator implements AbstractFileGenerator<TypeScriptRenderCompleteModelOptions> {
   /**

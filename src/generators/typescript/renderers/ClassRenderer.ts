@@ -1,6 +1,6 @@
-import { TypeScriptRenderer } from '../TypeScriptRenderer';
-import { CommonModel, ClassPreset, PropertyType } from '../../../models';
-import { getUniquePropertyName, DefaultPropertyNames } from '../../../helpers';
+import {TypeScriptRenderer} from '../TypeScriptRenderer';
+import {ClassPreset, CommonModel, PropertyType} from '../../../models';
+import {DefaultPropertyNames, getUniquePropertyName} from '../../../helpers';
 
 /**
  * Renderer for TypeScript's `class` type

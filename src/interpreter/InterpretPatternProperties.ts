@@ -1,4 +1,4 @@
-import { CommonModel } from '../models';
+import { CommonModel } from '@models';
 import { Interpreter, InterpreterOptions, InterpreterSchemaType } from './Interpreter';
 
 /**

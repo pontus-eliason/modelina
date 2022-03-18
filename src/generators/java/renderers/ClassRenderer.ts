@@ -1,6 +1,6 @@
-import { JavaRenderer } from '../JavaRenderer';
-import { CommonModel, ClassPreset, PropertyType } from '../../../models';
-import { DefaultPropertyNames, FormatHelpers, getUniquePropertyName } from '../../../helpers';
+import {JavaRenderer} from '../JavaRenderer';
+import {ClassPreset, CommonModel, PropertyType} from '../../../models';
+import {DefaultPropertyNames, FormatHelpers, getUniquePropertyName} from '../../../helpers';
 
 /**
  * Renderer for Java's `class` type

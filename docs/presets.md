@@ -7,16 +7,35 @@ A **preset** is a pure JavaScript object with format `key: value`, where `key` i
 ```js
 {
   // `class` model type 
-  class: {
-    self(...options) { /* logic */ },
+  class
+
+:
+  {
+    self(...options)
+    { /* logic */
+    }
+  ,
     // `setter` customization method 
-    setter(...options) { /* logic */ },
-  },
-  interface: {
+    setter()
+    { /* logic */
+    }
+  ,
+  }
+,
+  interface
+:
+  {
     // `property` customization method 
-    property(...options) { /* logic */ },
-    additionalContent(...options) { /* logic */ },
-  },
+    property(...options)
+    { /* logic */
+    }
+  ,
+    additionalContent(...options)
+    { /* logic */
+    }
+  ,
+  }
+,
 }
 ```
 

@@ -1,7 +1,7 @@
-import { CSharpRenderer } from '../CSharpRenderer';
-import { CSharpPreset } from '../CSharpPreset';
-import { getUniquePropertyName, DefaultPropertyNames, FormatHelpers, TypeHelpers, ModelKind } from '../../../helpers';
-import { CommonInputModel, CommonModel } from '../../../models';
+import {CSharpRenderer} from '../CSharpRenderer';
+import {CSharpPreset} from '../CSharpPreset';
+import {DefaultPropertyNames, FormatHelpers, getUniquePropertyName, ModelKind, TypeHelpers} from '../../../helpers';
+import {CommonInputModel, CommonModel} from '../../../models';
 
 function renderSerializeProperty(modelInstanceVariable: string, model: CommonModel, inputModel: CommonInputModel) {
   let value = modelInstanceVariable;

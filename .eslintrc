@@ -26,6 +26,7 @@
     "no-warning-comments": "error",
     "no-loop-func": "error",
     "curly": ["error"],
+    "object-curly-spacing": ["error", "always"],
     "no-multi-spaces": "error",
     "consistent-return": 0,
     "consistent-this": [

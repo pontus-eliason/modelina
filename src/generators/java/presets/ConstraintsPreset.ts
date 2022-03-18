@@ -1,4 +1,5 @@
-import { JavaPreset } from '../JavaPreset';
+import {JavaPreset} from '../JavaPreset';
+
 /**
  * Preset which extends class's getters with annotations from `javax.validation.constraints` package
  * 

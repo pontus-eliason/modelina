@@ -1,4 +1,4 @@
-import { Draft4Schema, CommonModel } from '../models';
+import { CommonModel, Draft4Schema } from '@models';
 import { InterpreterSchemaType } from './Interpreter';
 import { inferTypeFromValue } from './Utils';
 

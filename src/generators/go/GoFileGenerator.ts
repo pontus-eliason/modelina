@@ -1,8 +1,8 @@
-import { GoGenerator, GoRenderCompleteModelOptions } from './GoGenerator';
-import { CommonInputModel, OutputModel } from '../../models';
+import {GoGenerator, GoRenderCompleteModelOptions} from './GoGenerator';
+import {CommonInputModel, OutputModel} from '../../models';
 import * as path from 'path';
-import { AbstractFileGenerator } from '../AbstractFileGenerator';
-import { FileHelpers } from '../../helpers';
+import {AbstractFileGenerator} from '../AbstractFileGenerator';
+import {FileHelpers} from '../../helpers';
 
 export class GoFileGenerator extends GoGenerator implements AbstractFileGenerator<GoRenderCompleteModelOptions> {
   /**

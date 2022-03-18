@@ -1,4 +1,4 @@
-import { CommonInputModel, OutputModel } from '../models';
+import {CommonInputModel, OutputModel} from '../models';
 
 export type FileGenerator = (content: string, toFile: string) => Promise<void>; 
 

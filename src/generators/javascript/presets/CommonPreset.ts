@@ -1,7 +1,7 @@
-import { JavaScriptRenderer } from '../JavaScriptRenderer';
-import { JavaScriptPreset } from '../JavaScriptPreset';
-import { getUniquePropertyName, DefaultPropertyNames, TypeHelpers, ModelKind } from '../../../helpers';
-import { CommonInputModel, CommonModel } from '../../../models';
+import {JavaScriptRenderer} from '../JavaScriptRenderer';
+import {JavaScriptPreset} from '../JavaScriptPreset';
+import {DefaultPropertyNames, getUniquePropertyName, ModelKind, TypeHelpers} from '../../../helpers';
+import {CommonInputModel, CommonModel} from '../../../models';
 import renderExampleFunction from './utils/ExampleFunction';
 
 export interface JavaScriptCommonPresetOptions {

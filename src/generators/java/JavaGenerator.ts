@@ -1,15 +1,12 @@
-import { 
-  AbstractGenerator, 
-  CommonGeneratorOptions,
-  defaultGeneratorOptions
-} from '../AbstractGenerator';
-import { CommonModel, CommonInputModel, RenderOutput } from '../../models';
-import { CommonNamingConvention, CommonNamingConventionImplementation, ModelKind, TypeHelpers } from '../../helpers';
-import { JavaPreset, JAVA_DEFAULT_PRESET } from './JavaPreset';
-import { ClassRenderer } from './renderers/ClassRenderer';
-import { EnumRenderer } from './renderers/EnumRenderer';
-import { isReservedJavaKeyword } from './Constants';
-import { Logger } from '../../';
+import {AbstractGenerator, CommonGeneratorOptions, defaultGeneratorOptions} from '../AbstractGenerator';
+import {CommonInputModel, CommonModel, RenderOutput} from '../../models';
+import {CommonNamingConvention, CommonNamingConventionImplementation, ModelKind, TypeHelpers} from '../../helpers';
+import {JAVA_DEFAULT_PRESET, JavaPreset} from './JavaPreset';
+import {ClassRenderer} from './renderers/ClassRenderer';
+import {EnumRenderer} from './renderers/EnumRenderer';
+import {isReservedJavaKeyword} from './Constants';
+import {Logger} from '../../';
+
 export interface JavaOptions extends CommonGeneratorOptions<JavaPreset> {
   collectionType?: 'List' | 'Array';
   namingConvention?: CommonNamingConvention;

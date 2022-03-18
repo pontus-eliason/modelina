@@ -1,7 +1,8 @@
-import { CommonInputModel, CommonModel, OutputModel, Preset, Presets, RenderOutput, ProcessorOptions } from '../models';
-import { InputProcessor } from '../processors';
-import { IndentationTypes } from '../helpers';
-import { isPresetWithOptions } from '../utils';
+import {CommonInputModel, CommonModel, OutputModel, Preset, Presets, ProcessorOptions, RenderOutput} from '../models';
+import {InputProcessor} from '../processors';
+import {IndentationTypes} from '../helpers';
+import {isPresetWithOptions} from '../utils';
+
 export interface CommonGeneratorOptions<P extends Preset = Preset> {
   indentation?: {
     type: IndentationTypes;

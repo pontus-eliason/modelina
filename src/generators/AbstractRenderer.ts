@@ -1,6 +1,6 @@
-import { AbstractGenerator, CommonGeneratorOptions } from './AbstractGenerator';
-import { CommonModel, CommonInputModel, Preset } from '../models';
-import { FormatHelpers, IndentationTypes } from '../helpers';
+import {AbstractGenerator, CommonGeneratorOptions} from './AbstractGenerator';
+import {CommonInputModel, CommonModel, Preset} from '../models';
+import {FormatHelpers, IndentationTypes} from '../helpers';
 
 /**
  * Abstract renderer with common helper methods

@@ -1,8 +1,8 @@
-import { JavaGenerator, JavaRenderCompleteModelOptions } from './';
-import { CommonInputModel, OutputModel } from '../../models';
+import {JavaGenerator, JavaRenderCompleteModelOptions} from './';
+import {CommonInputModel, OutputModel} from '../../models';
 import * as path from 'path';
-import { AbstractFileGenerator } from '../AbstractFileGenerator';
-import { FileHelpers } from '../../helpers';
+import {AbstractFileGenerator} from '../AbstractFileGenerator';
+import {FileHelpers} from '../../helpers';
 
 export class JavaFileGenerator extends JavaGenerator implements AbstractFileGenerator<JavaRenderCompleteModelOptions> {
   /**

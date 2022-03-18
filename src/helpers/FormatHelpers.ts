@@ -1,9 +1,4 @@
-import {
-  camelCase,
-  pascalCase,
-  paramCase,
-  constantCase
-} from 'change-case';
+import {camelCase, constantCase, paramCase, pascalCase} from 'change-case';
 
 export enum IndentationTypes {
   TABS = 'tabs',

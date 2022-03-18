@@ -1,7 +1,7 @@
-import { TypeScriptRenderer } from '../TypeScriptRenderer';
+import {TypeScriptRenderer} from '../TypeScriptRenderer';
 
-import { EnumPreset } from '../../../models';
-import { FormatHelpers } from '../../../helpers';
+import {EnumPreset} from '../../../models';
+import {FormatHelpers} from '../../../helpers';
 
 /**
  * Renderer for TypeScript's `enum` type

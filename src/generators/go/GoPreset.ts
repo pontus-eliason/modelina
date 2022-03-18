@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { AbstractRenderer } from '../AbstractRenderer';
-import { Preset, CommonModel, CommonPreset, PresetArgs, EnumPreset } from '../../models';
-import { StructRenderer, GO_DEFAULT_STRUCT_PRESET } from './renderers/StructRenderer';
-import { EnumRenderer, GO_DEFAULT_ENUM_PRESET } from './renderers/EnumRenderer';
+import {AbstractRenderer} from '../AbstractRenderer';
+import {CommonModel, CommonPreset, EnumPreset, Preset, PresetArgs} from '../../models';
+import {GO_DEFAULT_STRUCT_PRESET, StructRenderer} from './renderers/StructRenderer';
+import {EnumRenderer, GO_DEFAULT_ENUM_PRESET} from './renderers/EnumRenderer';
 
 export enum FieldType {
   field,

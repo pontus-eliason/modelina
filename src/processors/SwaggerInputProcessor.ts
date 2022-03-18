@@ -1,7 +1,7 @@
 import { AbstractInputProcessor } from './AbstractInputProcessor';
 import { JsonSchemaInputProcessor } from './JsonSchemaInputProcessor';
-import { CommonInputModel, SwaggerV2Schema } from '../models';
-import { Logger } from '../utils';
+import { CommonInputModel, SwaggerV2Schema } from '@models';
+import { Logger } from '@utils';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import { OpenAPIV2 } from 'openapi-types';
 
@@ -56,7 +56,7 @@ export class SwaggerInputProcessor extends AbstractInputProcessor {
         if (getOperationResponseSchema !== undefined) { 
           const swaggerSchema = SwaggerInputProcessor.convertToInternalSchema(getOperationResponseSchema, `${path}_${responseName}`);
           const commonModels = JsonSchemaInputProcessor.convertSchemaToCommonModel(swaggerSchema);
-          inputModel.models = {...inputModel.models, ...commonModels};
+          inputModel.models = { ...inputModel.models, ...commonModels };
         }
       }
     }
@@ -69,7 +69,7 @@ export class SwaggerInputProcessor extends AbstractInputProcessor {
         const bodyParameterSchema = parameter.schema;
         const swaggerSchema = SwaggerInputProcessor.convertToInternalSchema(bodyParameterSchema, `${path}_body`);
         const commonModels = JsonSchemaInputProcessor.convertSchemaToCommonModel(swaggerSchema);
-        inputModel.models = {...inputModel.models, ...commonModels};
+        inputModel.models = { ...inputModel.models, ...commonModels };
       }
     }
   }

@@ -1,0 +1,175 @@
+$schema: 'http://json-schema.org/draft-07/schema#'
+#$id: "Checkout"
+$ref: '#/definitions/Hello'
+
+#type: object
+#additionalProperties: false
+#
+#properties:
+#  a:
+#    $ref: '#/definitions/Hello'
+
+definitions:
+  Hello:
+    $id: Hello
+    type: object
+    additionalProperties: false
+    properties:
+      hello:
+        type: string
+
+  ServerRequest:
+    type: object
+    properties:
+      yo:
+        type: boolean
+
+#$defs:
+#  ServerRequests:
+#    $id: "/schemas/ServerRequests"
+#    $schema: "http://json-schema.org/draft-07/schema#"
+#    type: array
+#    items:
+#      $ref: '#/ServerRequest'
+#
+#  ServerRequest:
+#    $id: "/schemas/ServerRequest"
+#    $schema: "http://json-schema.org/draft-07/schema#"
+#    type: object
+#    required: [ type ]
+#    properties:
+#      type:
+#        type: string
+#    discriminator:
+#      propertyName: type
+#      mapping:
+#        select: "/schemas/Select"
+#        redirect: "/schemas/Redirect"
+#        text: "/schemas/TextInput"
+#
+#  SelectOption:
+#    $id: "/schemas/SelectOption"
+#    $schema: "http://json-schema.org/draft-07/schema#"
+#    type: object
+#    properties:
+#      label:
+#        type: string
+#      value:
+#        type: string
+#      checked:
+#        type: boolean
+#      disabled:
+#        type: boolean
+#      attributes:
+#        type: object
+#        additionalProperties: true
+#
+#  Select:
+#    $id: "/schemas/Select"
+#    $schema: "http://json-schema.org/draft-07/schema#"
+#    allOf:
+#      - $ref: '/schemas/ServerRequest'
+#    type: object
+#    properties:
+#      label:
+#        type: string
+#      name:
+#        type: string
+#      nopreselect:
+#        type: boolean
+#      options:
+#        type: array
+#        items:
+#          $ref: '/schemas/SelectOption'
+#      encrypt:
+#        type: boolean
+#      savable:
+#        type: boolean
+#
+#  RedirectTarget:
+#    $id: "/schemas/RedirectTarget"
+#    $schema: "http://json-schema.org/draft-07/schema#"
+#    type: string
+#    enum:
+#      - _blank
+#
+#  Redirect:
+#    $id: "/schemas/Redirect"
+#    $schema: "http://json-schema.org/draft-07/schema#"
+#    allOf:
+#      - $ref: '/schemas/ServerRequest'
+#    type: object
+#    properties:
+#      href:
+#        type: string
+#        description: Target address to redirect user to.
+#      interactive:
+#        type: boolean
+#        description: If `false` it will redirect directly to passed address.
+#      target:
+#        $ref: '#/RedirectTarget'
+#
+#  TextInputContext:
+#    $id: "/schemas/TextInputContext"
+#    $schema: "http://json-schema.org/draft-07/schema#"
+#    type: string
+#    description: Only if name=information.
+#    enum:
+#      - dateofbirth
+#      - bsn
+#
+#  TextInputKeyboard:
+#    $id: "/schemas/TextInputKeyboard"
+#    $schema: "http://json-schema.org/draft-07/schema#"
+#    type: string
+#    enum:
+#      - numeric
+#      - text
+#    description: Keyboard type that should be triggered on mobile devices, must be one of `numeric` `text`
+#
+#  TextInput:
+#    $id: "/schemas/TextInput"
+#    $schema: "http://json-schema.org/draft-07/schema#"
+#    allOf:
+#      - $ref: '/schemas/ServerRequest'
+#    type: object
+#    properties:
+#      label:
+#        type: string
+#        description: Description to the user of expected input value
+#      encrypt:
+#        type: boolean
+#        description: If value should be encrypted or not
+#      savable:
+#        type: boolean
+#        description: If it should render a button for the user to decide whether to store value to local storage or not
+#      value:
+#        type: string
+#        description: Initial value to populate input field with
+#      keyboard:
+#        $ref: '/schemas/TextInputKeyboard'
+#      name:
+#        type: string
+#        description: Type of text input rendered, `information`. Will fallback to default text input
+#      regex:
+#        type: string
+#        format: regex
+#        description: RegExp string used for validation of input value
+#      size:
+#        type: number
+#        format: integer
+#        description: Specify how many numbers of characters long the input field should be
+#      prefix:
+#        type: string
+#        description: Adds a prefixed string to input value
+#      disabled:
+#        type: boolean
+#        description: Sets the input field to disabled
+#      errormessage:
+#        type: string
+#        description: Set custom validation message of maximum 30 characters. If exceeded, fallback will be `Wrong format`
+#      placeholder:
+#        type: string
+#        description: Only if name=information.
+#      context:
+#        $ref: '/schemas/TextInputContext'

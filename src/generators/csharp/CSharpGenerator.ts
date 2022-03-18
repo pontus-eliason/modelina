@@ -1,15 +1,11 @@
-import {
-  AbstractGenerator,
-  CommonGeneratorOptions,
-  defaultGeneratorOptions
-} from '../AbstractGenerator';
-import { CommonModel, CommonInputModel, RenderOutput } from '../../models';
-import { TypeHelpers, ModelKind, CommonNamingConvention, CommonNamingConventionImplementation } from '../../helpers';
-import { CSharpPreset, CSHARP_DEFAULT_PRESET } from './CSharpPreset';
-import { EnumRenderer } from './renderers/EnumRenderer';
-import { ClassRenderer } from './renderers/ClassRenderer';
-import { isReservedCSharpKeyword } from './Constants';
-import { Logger } from '../../index';
+import {AbstractGenerator, CommonGeneratorOptions, defaultGeneratorOptions} from '../AbstractGenerator';
+import {CommonInputModel, CommonModel, RenderOutput} from '../../models';
+import {CommonNamingConvention, CommonNamingConventionImplementation, ModelKind, TypeHelpers} from '../../helpers';
+import {CSHARP_DEFAULT_PRESET, CSharpPreset} from './CSharpPreset';
+import {EnumRenderer} from './renderers/EnumRenderer';
+import {ClassRenderer} from './renderers/ClassRenderer';
+import {isReservedCSharpKeyword} from './Constants';
+import {Logger} from '../../index';
 
 export interface CSharpOptions extends CommonGeneratorOptions<CSharpPreset> {
   namingConvention?: CommonNamingConvention;

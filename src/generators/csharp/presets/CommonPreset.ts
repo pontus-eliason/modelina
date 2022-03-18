@@ -1,8 +1,8 @@
-import { CSharpRenderer } from '../CSharpRenderer';
-import { CSharpPreset } from '../CSharpPreset';
+import {CSharpRenderer} from '../CSharpRenderer';
+import {CSharpPreset} from '../CSharpPreset';
 
-import { getUniquePropertyName, FormatHelpers, DefaultPropertyNames } from '../../../helpers';
-import { CommonModel } from '../../../models';
+import {DefaultPropertyNames, FormatHelpers, getUniquePropertyName} from '../../../helpers';
+import {CommonModel} from '../../../models';
 
 export interface CSharpCommonPresetOptions {
   equal: boolean;

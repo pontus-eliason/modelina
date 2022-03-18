@@ -1,10 +1,10 @@
-import { AbstractRenderer } from '../AbstractRenderer';
-import { GoGenerator, GoOptions } from './GoGenerator';
-import { CommonModel, CommonInputModel, Preset } from '../../models';
-import { FormatHelpers } from '../../helpers/FormatHelpers';
-import { DefaultPropertyNames, getUniquePropertyName } from '../../helpers';
-import { FieldType } from './GoPreset';
-import { isReservedGoKeyword } from './Constants';
+import {AbstractRenderer} from '../AbstractRenderer';
+import {GoGenerator, GoOptions} from './GoGenerator';
+import {CommonInputModel, CommonModel, Preset} from '../../models';
+import {FormatHelpers} from '../../helpers/FormatHelpers';
+import {DefaultPropertyNames, getUniquePropertyName} from '../../helpers';
+import {FieldType} from './GoPreset';
+import {isReservedGoKeyword} from './Constants';
 
 /**
  * Common renderer for Go types

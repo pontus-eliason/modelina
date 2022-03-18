@@ -1,6 +1,6 @@
-import { Preset, EnumPreset, ClassPreset, PresetArgs, PropertyArgs } from '../../models';
-import { ClassRenderer, CSHARP_DEFAULT_CLASS_PRESET } from './renderers/ClassRenderer';
-import { CSHARP_DEFAULT_ENUM_PRESET, EnumRenderer } from './renderers/EnumRenderer';
+import {ClassPreset, EnumPreset, Preset, PresetArgs, PropertyArgs} from '../../models';
+import {ClassRenderer, CSHARP_DEFAULT_CLASS_PRESET} from './renderers/ClassRenderer';
+import {CSHARP_DEFAULT_ENUM_PRESET, EnumRenderer} from './renderers/EnumRenderer';
 
 // Our class preset uses custom `accessor` hook to craft getter and setters.
 export interface CsharpClassPreset extends ClassPreset<ClassRenderer> {
