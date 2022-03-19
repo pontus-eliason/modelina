@@ -1,6 +1,7 @@
 import AbstractNode from '@cst/AbstractNode';
 import AbstractToken from '@cst/AbstractToken';
-import {JavaCstVisitor} from '@cst/visitors/JavaCstVisitor';
+import { JavaCstVisitor } from '@cst/visitors/JavaCstVisitor';
+import { JavaUtil } from '@cst/java/JavaUtil';
 
 abstract class AbstractJavaNode extends AbstractNode<JavaCstVisitor> {
 
@@ -14,6 +15,19 @@ export enum TokenType {
   MULTIPLY,
   SUBTRACT
 }
+
+// :	'='
+// |	'*='
+// |	'/='
+// |	'%='
+// |	'+='
+// |	'-='
+// |	'<<='
+// |	'>>='
+// |	'>>>='
+// |	'&='
+// |	'^='
+// |	'|='
 
 export class JavaToken extends AbstractToken<JavaCstVisitor> {
   type: TokenType;
@@ -36,7 +50,7 @@ export class Type extends AbstractJavaNode {
     this.fqn = fqn;
   }
 
-  visit(visitor: JavaCstVisitor) {
+  visit(visitor: JavaCstVisitor): void {
     visitor.visitType(this);
   }
 }
@@ -61,39 +75,56 @@ export class Identifier extends AbstractJavaNode {
 export abstract class AbstractExpression extends AbstractJavaNode {
 }
 
-export class KeyValuePair extends AbstractJavaNode {
-  key: Identifier;
-  value: AbstractExpression;
+// Split this into different types of constant depending on the type?
+export class Literal extends AbstractJavaNode {
+  value: any;
 
-  constructor(key: Identifier, value: AbstractExpression) {
+  constructor(value: any) {
+    super();
+    this.value = value;
+  }
+
+  visit(visitor: JavaCstVisitor): void {
+    visitor.visitLiteral(this);
+  }
+}
+
+// eslint-disable-next-line no-use-before-define
+type AnnotationValue = Literal | Annotation;
+
+export class AnnotationKeyValuePair extends AbstractJavaNode {
+  key: Identifier | undefined;
+  value: AnnotationValue;
+
+  constructor(key: Identifier | undefined, value: AnnotationValue) {
     super();
     this.key = key;
     this.value = value;
   }
 
   visit(visitor: JavaCstVisitor): void {
-    visitor.visitKeyValuePair(this);
+    visitor.visitAnnotationKeyValuePair(this);
   }
 }
 
-export class KeyValuePairList extends AbstractJavaNode {
-  children: KeyValuePair[];
+export class AnnotationKeyValuePairList extends AbstractJavaNode {
+  children: AnnotationKeyValuePair[];
 
-  constructor(children: KeyValuePair[]) {
+  constructor(...children: AnnotationKeyValuePair[]) {
     super();
     this.children = children;
   }
 
   visit(visitor: JavaCstVisitor): void {
-    visitor.visitKeyValuePairList(this);
+    visitor.visitAnnotationKeyValuePairList(this);
   }
 }
 
 export class Annotation extends AbstractJavaNode {
   type: Type;
-  pairs: KeyValuePairList;
+  pairs?: AnnotationKeyValuePairList;
 
-  constructor(type: Type, pairs: KeyValuePairList) {
+  constructor(type: Type, pairs?: AnnotationKeyValuePairList) {
     super();
     this.type = type;
     this.pairs = pairs;
@@ -161,6 +192,16 @@ export class BinaryExpression extends AbstractJavaNode {
 
   visit(visitor: JavaCstVisitor): void {
     visitor.visitBinaryExpression(this);
+  }
+}
+
+export class AssignExpression extends BinaryExpression {
+  constructor(left: AbstractExpression, right: AbstractExpression) {
+    super(left, new JavaToken(TokenType.ASSIGN), right);
+  }
+
+  visit(visitor: JavaCstVisitor): void {
+    visitor.visitAssignExpression(this);
   }
 }
 
@@ -405,12 +446,12 @@ export class MethodDeclaration extends AbstractMethodDeclaration {
     this.pParameters = value;
   }
 
-  constructor(modifiers: ModifierList, type: Type, name: Identifier, parameters: ArgumentDeclarationList) {
+  constructor(type: Type, name: Identifier, parameters?: ArgumentDeclarationList, modifiers?: ModifierList) {
     super();
-    this.pModifiers = modifiers;
     this.pType = type;
     this.pName = name;
     this.pParameters = parameters;
+    this.pModifiers = modifiers || new ModifierList([new Modifier(ModifierType.PUBLIC)]);
   }
 
   visit(visitor: JavaCstVisitor): void {
@@ -442,14 +483,14 @@ export abstract class AbstractFieldBackedMethodDeclaration extends AbstractMetho
   }
 }
 
-export class Getter extends AbstractFieldBackedMethodDeclaration {
+export class FieldBackedGetter extends AbstractFieldBackedMethodDeclaration {
   get type(): Type {
     return this.field.type;
   }
 
   // The name needs to be capitalized properly, etc, etc
   get name(): Identifier {
-    return new Identifier(`get${this.field.identifier.value}`);
+    return new Identifier(JavaUtil.getGetterName(this.field.identifier, this.type));
   }
 
   get parameters(): ArgumentDeclarationList | undefined {
@@ -463,18 +504,18 @@ export class Getter extends AbstractFieldBackedMethodDeclaration {
   }
 
   visit(visitor: JavaCstVisitor): void {
-    visitor.visitGetter(this);
+    visitor.visitFieldBackedGetter(this);
   }
 }
 
-export class Setter extends AbstractFieldBackedMethodDeclaration {
+export class FieldBackedSetter extends AbstractFieldBackedMethodDeclaration {
   get type(): Type {
     return new Type('void');
   }
 
   // The name needs to be capitalized properly, etc, etc
   get name(): Identifier {
-    return new Identifier(`set${this.field.identifier.value}`);
+    return new Identifier(JavaUtil.getSetterName(this.field.identifier, this.type));
   }
 
   get parameters(): ArgumentDeclarationList {
@@ -488,9 +529,8 @@ export class Setter extends AbstractFieldBackedMethodDeclaration {
 
   constructor(field: Field, annotations?: AnnotationList) {
     super(field, annotations, new Block(
-      new BinaryExpression(
+      new AssignExpression(
         new FieldReference(field),
-        new JavaToken(TokenType.ASSIGN),
         // TODO: Change, so that "value" is not hard-coded! Or is "identifier" enough?
         new VariableReference(new Identifier('value'))
       )
@@ -498,20 +538,20 @@ export class Setter extends AbstractFieldBackedMethodDeclaration {
   }
 
   visit(visitor: JavaCstVisitor): void {
-    visitor.visitSetter(this);
+    visitor.visitFieldBackedSetter(this);
   }
 }
 
 export class FieldGetterSetter extends AbstractJavaNode {
   field: Field;
-  readonly getter: Getter;
-  readonly setter: Setter;
+  readonly getter: FieldBackedGetter;
+  readonly setter: FieldBackedSetter;
 
-  constructor(type: Type, identifier: Identifier) {
+  constructor(type: Type, identifier: Identifier, annotations?: AnnotationList) {
     super();
-    this.field = new Field(type, identifier);
-    this.getter = new Getter(this.field);
-    this.setter = new Setter(this.field);
+    this.field = new Field(type, identifier, undefined, undefined, annotations);
+    this.getter = new FieldBackedGetter(this.field);
+    this.setter = new FieldBackedSetter(this.field);
   }
 
   visit(visitor: JavaCstVisitor): void {
@@ -611,15 +651,6 @@ export class InterfaceDeclaration extends AbstractObjectDeclaration {
 
   visit(visitor: JavaCstVisitor): void {
     visitor.visitInterfaceDeclaration(this);
-  }
-}
-
-// Split this into different types of constant depending on the type?
-export class Constant extends AbstractJavaNode {
-  value: any;
-
-  visit(visitor: JavaCstVisitor): void {
-    visitor.visitConstant(this);
   }
 }
 
