@@ -1,0 +1,400 @@
+openapi: "3.0.0"
+info:
+  title: bain
+  version: 1.0.0
+servers:
+  - url: https://some-service.cloud
+    description: An example of a full service that uses most of the complex functionality
+tags:
+  - name: service
+paths:
+  /api/v1/login:
+    post:
+      operationId: login
+      tags:
+        - service
+      parameters:
+        - name: order
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        200:
+          description: The default response on a login attempt
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+    put:
+      operationId: login-continue
+      tags:
+        - service
+      parameters:
+        - name: order
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContinueLogin"
+      responses:
+        200:
+          description: The default response on a login continuation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginPerformed"
+
+  /api/v1/accounts:
+    post:
+      operationId: accounts
+      tags:
+        - service
+      parameters:
+        - name: order
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountsRequest"
+      responses:
+        200:
+          description: The default response when asking for accounts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountsResponse"
+
+  /api/v1/transactions:
+    post:
+      operationId: transactions
+      tags:
+        - service
+      parameters:
+        - name: order
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionsRequest"
+      responses:
+        200:
+          description: The default response when asking for transactions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionsResponse"
+
+components:
+  schemas:
+
+    IntegrationParameters:
+      type: object
+      required: [ integrationId, allowOverlay ]
+      properties:
+        integrationId:
+          type: string
+          example: "gb.mock.open_banking"
+          default: "gb.mock.open_banking"
+
+    IpAddress:
+      type: string
+      example: "127.0.0.1"
+
+    UserAgent:
+      type: string
+      description: The User-Agent of the EndUser
+      example: "Mozilla/5.0 (Linux; Android 7.1.2; Nexus 5X Build/N2G48C; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/64.0.3282.137 Mobile Safari/537.36"
+
+    LoginRequest:
+      type: object
+      required: [orderRef, endUserHost, endUserAgent]
+      properties:
+        orderRef:
+          $ref: "#/components/schemas/prop_orderRef"
+        integrationParameters:
+          $ref: "#/components/schemas/IntegrationParameters"
+        endUserHost:
+          $ref: "#/components/schemas/IpAddress"
+        endUserAgent:
+          $ref: "#/components/schemas/UserAgent"
+
+    AbstractRequest:
+      type: object
+      required: [ orderRef ]
+      properties:
+        orderRef:
+          type: string
+
+    # TODO: This should be able to be improved, by not including "failureCause" in the default response
+    AbstractResponse:
+      type: object
+      required: [ type, orderRef ]
+      properties:
+        type:
+          type: string
+        orderRef:
+          type: string
+        failureCause:
+          $ref: "#/components/schemas/RequestFailureCause"
+        retryable:
+          type: boolean
+          description: Is only viable if the failureCause is not null
+
+    AccountsRequest:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/AbstractRequest"
+
+    AccountsResponse:
+      allOf:
+        - $ref: "#/components/schemas/AbstractResponse"
+      type: object
+      required: [bankAccounts]
+      properties:
+        bankAccounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/Account"
+
+    TransactionsRequest:
+      allOf:
+        - $ref: "#/components/schemas/AbstractRequest"
+      type: object
+      properties:
+        accountIdentifier:
+          $ref: "#/components/schemas/AccountIdentifier"
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+
+    TransactionsResponse:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/AbstractResponse"
+      required: [ transferHistoryEntries ]
+      properties:
+        transferHistoryEntries:
+          type: array
+          items:
+            $ref: "#/components/schemas/TransferHistoryEntry"
+
+    Account:
+      type: object
+      properties:
+        accountIdentifier:
+          $ref: "#/components/schemas/AccountIdentifier"
+        name:
+          type: string
+        currency:
+          type: string
+        amount:
+          type: number
+          format: double
+        accountType:
+          type: string
+        transferable:
+          type: boolean
+        corporate:
+          type: boolean
+        directDebit:
+          type: boolean
+        accountHolder:
+          type: array
+          items:
+            type: string
+
+    DebtorAccount:
+      type: object
+
+    RequestFailureCause:
+      type: string
+      enum: [ ACCESS_BLOCKED, ACCOUNT_LOCKED, ACTIVE_SESSION, ACTIVE_AUTH_SESSION, AUTHENTICATION_CALL_FAILED, BANK_ID_CERTIFICATE_EXPIRED, BANK_ID_DISABLED, BANK_TEMPORARILY_UNAVAILABLE, BLOCKED_BY_PENDING_TRANSFERS, CAN_NOT_TRANSFER_FROM_ACCOUNT, CODE_CARD_LOCKED_24H, COMMAND_NOT_SUPPORTED, COMMAND_TIMED_OUT, CORPORATE_ACCOUNT, COULD_NOT_VERIFY_TRANSFER_EXECUTION, INACTIVE_TOO_LONG, INCORRECT_CREDENTIALS, INSUFFICIENT_FUNDS, INTEGRATION_NOT_SUPPORTED, INVALID_AUTH_METHOD, KEYCARD_EMPTY, LOGGED_OUT, MAX_AMOUNT_EXCEEDED, MUST_ACCEPT_TC, MUST_RENEW_PASSWORD, MUST_SYNC_TAN_GENERATOR, NEW_INFORMATION, NO_ACTIVE_SCA, NO_CHIP_TAN_CARD, NO_ONLINE_ACCESS, NO_PENDING_TRANSFER_TO_SIGN, NO_USABLE_ACCOUNT_FOUND, NO_SUPPORTED_AUTH_METHOD, OPERATION_CANCELLED_BY_USER, PAYMENT_OPERATION_DENIED, PAYMENT_TYPE_NOT_SUPPORTED, PIN_BLOCKED, PIN_CHANGE_REQUIRED, PSD2_NOT_ALLOWED, REFRESH_TOKEN_EXPIRED, REQUIRED_FUNCTIONALITY_NOT_FOUND, TAN_ALREADY_USED, TECHNICAL_ERROR_CRITICAL, TECHNICAL_ERROR_RECOVERABLE, TRANSACTION_LIMIT_EXCEEDED, TRANSFER_REJECTED, UNDER_AGE_USER, UNKNOWN_BANK_ERROR ]
+      description: Applicable if the response is signifying a request failure
+
+    LoginResponse:
+      allOf:
+        - $ref: "#/components/schemas/AbstractResponse"
+      type: object
+      properties:
+        requirements:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnyValue"
+
+    AnyValue:
+      description: Any object or value
+
+    Continue:
+      type: object
+      #      allOf:
+      #        - $ref: "#/components/schemas/AbstractRequest"
+      properties:
+        frontendResponse:
+          additionalProperties:
+            type: string
+
+    ContinueLogin:
+      allOf:
+        - $ref: "#/components/schemas/Continue"
+        - $ref: "#/components/schemas/AbstractRequest"
+
+    LoginPerformed:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/LoginResponse"
+      properties:
+        authMethod:
+          type: string
+        bankAuthorization:
+          $ref: "#/components/schemas/BankAuthorization"
+
+    BankAuthorization:
+      type: object
+      properties:
+        scope:
+          type: string
+        accessToken:
+          $ref: "#/components/schemas/AccessToken"
+        refreshToken:
+          $ref: "#/components/schemas/RefreshToken"
+        extraParams:
+          additionalProperties:
+            type: string
+
+    AbstractToken:
+      type: object
+      properties:
+        expirationDate:
+          type: string
+          format: date-time
+
+    AccessToken:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/AbstractToken"
+      properties:
+        accessTokenValue:
+          type: string
+
+    RefreshToken:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/AbstractToken"
+      properties:
+        refreshTokenValue:
+          type: string
+
+    #    @JsonSubTypes.Type(value = AppAuthenticationRequirementDTO.class, name = "APP_AUTHENTICATION"),
+    #    @JsonSubTypes.Type(value = QrCodeAuthenticationRequirementDTO.class, name = "QR_CODE_AUTHENTICATION"),
+    #    @JsonSubTypes.Type(value = AuthCodeRedirectRequirementDTO.class, name = "AUTH_CODE_REDIRECT"),
+    #    @JsonSubTypes.Type(value = AuthMethodRequirementDTO.class, name = "AUTH_METHOD"),
+    #    @JsonSubTypes.Type(value = BankUserInputRequirementDTO.class, name = "BANK_USER_INPUT"),
+    #    @JsonSubTypes.Type(value = OtpRequirementDTO.class, name = "OTP"),
+    #    @JsonSubTypes.Type(value = SelectRequirementDTO.class, name = "SELECT"),
+    #    @JsonSubTypes.Type(value = SimpleRedirectRequirementDTO.class, name = "REDIRECT"),
+    #    @JsonSubTypes.Type(value = StateParameterRequirementDTO.class, name = "STATE_PARAMETER"),
+    #    @JsonSubTypes.Type(value = AccountSelectRequirementDTO.class, name = "ACCOUNT_SELECT"),
+    #    @JsonSubTypes.Type(value = DataUrlRequirementDTO.class, name = "DATA_URL"),
+    #    @JsonSubTypes.Type(value = DataRequirementDTO.class, name = "DATA")
+
+    prop_orderRef:
+      type: string
+      example: 2686260312
+
+    DomesticAccount:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        bankNumber:
+          type: string
+
+    IbanAccount:
+      type: object
+      properties:
+        iban:
+          type: string
+        bic:
+          type: string
+
+    AccountIdentifier:
+      type: object
+      properties:
+        domesticAccount:
+          $ref: "#/components/schemas/DomesticAccount"
+        ibanAccount:
+          $ref: "#/components/schemas/IbanAccount"
+        internalId:
+          type: string
+
+    Gender:
+      type: string
+      enum:
+        - MALE
+        - FEMALE
+
+    KycData:
+      type: object
+      properties:
+        nationalIdentificationNumber:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        gender:
+          $ref: "#/components/schemas/Gender"
+
+    MonetaryAmount:
+      type: object
+      required: [ amount, currency ]
+      properties:
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+          format: Currency
+
+    TransferHistoryEntry:
+      type: object
+      required: [ amount, currency, reference, transactionDate, pending ]
+      properties:
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+          format: Currency
+        reference:
+          type: string
+        transactionDate:
+          type: string
+          format: date-time
+        pending:
+          type: boolean
