@@ -1,12 +1,15 @@
 /* eslint-disable */
-import {JavaCstVisitor} from '@cst/visitors/JavaCstVisitor';
+import { JavaCstVisitor } from '@cst/visitors/JavaCstVisitor';
 import * as Java from '@cst/java';
-import {ModifierType, TokenType} from '@cst/java';
+import { ModifierType, TokenType } from '@cst/java';
 import AbstractNode from '@cst/AbstractNode';
 
 export class JavaCstRenderer extends JavaCstVisitor {
-  private stack: string[] = [];
+  private stack: string[] = [''];
   private depth: number = 0;
+  private readonly _lineStart = new RegExp(/(?<!$)^/mg);
+  private _tokenPrefix = ' ';
+  private _tokenSuffix = ' ';
 
   private append(str: string): void {
     this.stack[this.stack.length - 1] += str;
@@ -21,13 +24,13 @@ export class JavaCstRenderer extends JavaCstVisitor {
 
   private pop(incrementedDepth: boolean = false): string {
 
+    if (incrementedDepth) {
+      this.depth--;
+    }
+
     const popped = this.stack.pop();
     if (popped === undefined) {
       throw new Error('Cannot pop is the stack is empty');
-    }
-
-    if (incrementedDepth) {
-      this.depth--;
     }
 
     return popped;
@@ -43,8 +46,8 @@ export class JavaCstRenderer extends JavaCstVisitor {
     return this.pop(incrementDepth);
   }
 
-  private getIndentation(): string {
-    return ' '.repeat(this.stack.length);
+  private getIndentation(d: number = this.depth): string {
+    return '  '.repeat(d);
   }
 
   render(node: AbstractNode<this>): string {
@@ -68,22 +71,6 @@ export class JavaCstRenderer extends JavaCstVisitor {
     }
   }
 
-  visitBlock(node: Java.Block): void {
-
-    this.push(true);
-    super.visitBlock(node);
-    const blockContent = this.pop(true);
-
-    const indentation = this.getIndentation();
-    const indentedBlockContent = indentation + blockContent.replace(/\n/, `\n${indentation}`);
-
-    this.append(indentedBlockContent);
-  }
-
-  // visitBinaryExpression(node: Java.BinaryExpression) {
-  //   super.visitBinaryExpression(node);
-  // }
-
   visitFieldReference(node: Java.FieldReference) {
     this.append(`this.${this.pushAndPop(node.field.identifier)}`);
   }
@@ -93,7 +80,7 @@ export class JavaCstRenderer extends JavaCstVisitor {
   }
 
   visitToken(node: Java.JavaToken) {
-    this.append(JavaCstRenderer.getTokenTypeString(node.type));
+    this.append(`${this._tokenPrefix}${JavaCstRenderer.getTokenTypeString(node.type)}${this._tokenSuffix}`);
   }
 
   private static getTokenTypeString(type: Java.TokenType) {
@@ -115,38 +102,37 @@ export class JavaCstRenderer extends JavaCstVisitor {
     }
   }
 
-  visitClassDeclaration(node: Java.ClassDeclaration) {
+  visitBlock(node: Java.Block): void {
 
-    const comments = node.comments ? this.pushAndPop(node.comments) + '\n' : '';
-    const annotations = node.annotations ? this.pushAndPop(node.annotations) + '\n' : '';
+    this.push(true);
+    const indentation = this.getIndentation();
+    super.visitBlock(node);
+    const blockContent = this.pop(true);
+
+    const indentedBlockContent = blockContent.replace(this._lineStart, indentation);
+
+    this.append(indentedBlockContent);
+  }
+
+  visitCommonTypeDeclaration(node: Java.AbstractObjectDeclaration, typeType: string) {
     const modifiers = this.pushAndPop(node.modifiers);
     const name = this.pushAndPop(node.name);
     const classExtension = node.extends ? ' ' + this.pushAndPop(node.extends) : '';
     const classImplementations = node.implements ? ' ' + this.pushAndPop(node.implements) : '';
-    const body = this.pushAndPop(node.body);
 
-    this.append(comments);
-    this.append(annotations);
-    this.append(`${modifiers} class ${name}${classExtension}${classImplementations} {\n`);
-    this.append(body);
-    this.append('\n}\n');
+    this.append(node.comments ? this.pushAndPop(node.comments) + '\n' : '');
+    this.append(node.annotations ? this.pushAndPop(node.annotations) + '\n' : '');
+    this.append(`${modifiers} ${typeType} ${name}${classExtension}${classImplementations} {\n`);
+    this.append(this.pushAndPop(node.body));
+    this.append(`}\n`);
   }
 
-  visitField(node: Java.Field): void {
-
-    const modifierTypes = node.modifiers.modifiers.map(it => it.type).map(it => JavaCstRenderer.getModifierString(it));
-    const modifiersJoined = modifierTypes.join(' ');
-
-    const typeName = JavaCstRenderer.getTypeName(node.type);
-
-    this.append(modifiersJoined);
-    this.append(` ${typeName} `);
-    this.append(node.identifier.value);
-    this.append(';\n');
+  visitClassDeclaration(node: Java.ClassDeclaration) {
+    this.visitCommonTypeDeclaration(node, 'class');
   }
 
-  visitIdentifier(node: Java.Identifier) {
-    this.append(node.value);
+  visitInterfaceDeclaration(node: Java.InterfaceDeclaration) {
+    this.visitCommonTypeDeclaration(node, 'interface');
   }
 
   visitMethodDeclaration(node: Java.AbstractMethodDeclaration) {
@@ -157,7 +143,7 @@ export class JavaCstRenderer extends JavaCstVisitor {
     const type = this.pushAndPop(node.type);
     const name = this.pushAndPop(node.name);
     const parameters = node.parameters ? this.pushAndPop(node.parameters) : '';
-    const body = node.body ? this.pushAndPop(node.body, true) : '';
+    const body = node.body ? this.pushAndPop(node.body) : '';
 
     this.append(comments);
     this.append(annotations);
@@ -166,15 +152,74 @@ export class JavaCstRenderer extends JavaCstVisitor {
     this.append('\n}\n');
   }
 
+  visitAnnotationList(node: Java.AnnotationList) {
+    this.append(node.children.map(it => this.pushAndPop(it)).join('\n'));
+  }
+
+  visitAnnotation(node: Java.Annotation) {
+    const pairs = node.pairs ? '(' + this.pushAndPop(node.pairs) + ')' : '';
+    this.append(`@${this.pushAndPop(node.type)}${pairs}`);
+  }
+
+  visitAnnotationKeyValuePairList(node: Java.AnnotationKeyValuePairList) {
+    this.append(node.children.map(it => this.pushAndPop(it)).join(', '));
+  }
+
+  visitAnnotationKeyValuePair(node: Java.AnnotationKeyValuePair) {
+    const key = node.key ? this.pushAndPop(node.key) + ' = ' : '';
+    this.append(`${key}${this.pushAndPop(node.value)}`);
+  }
+
+  visitLiteral(node: Java.Literal) {
+    if (typeof node.value === 'string' || node.value instanceof String) {
+      this.append(`"${node.value}"`);
+    } else {
+      this.append(`${node.value}`);
+    }
+  }
+
+  visitFieldGetterSetter(node: Java.FieldGetterSetter) {
+    super.visitFieldGetterSetter(node);
+    this.append('\n');
+  }
+
+  visitField(node: Java.Field): void {
+
+    const comments = node.comments ? this.pushAndPop(node.comments) + '\n' : '';
+    const annotations = node.annotations ? this.pushAndPop(node.annotations) + '\n' : '';
+    const modifiers = this.pushAndPop(node.modifiers);
+    const typeName = this.pushAndPop(node.type);
+    const initializer = node.initializer ? ' = ' + this.pushAndPop(node.initializer) : '';
+    const identifier = this.pushAndPop(node.identifier);
+
+    this.append(comments);
+    this.append(annotations);
+    this.append(`${modifiers} ${typeName} ${identifier}${initializer};\n`);
+  }
+
+  visitIdentifier(node: Java.Identifier) {
+    this.append(node.value);
+  }
+
   visitArgumentDeclaration(node: Java.ArgumentDeclaration): void {
 
     // TODO: Make this simpler by allowing to "visit" between things, so we can insert spaces or delimiters without tinkering inside the base visitor
 
     const annotations = node.annotations ? this.pushAndPop(node.annotations) + ' ' : '';
-    const type =  this.pushAndPop(node.type);
-    const identifier =this.pushAndPop(node.identifier);
+    const type = this.pushAndPop(node.type);
+    const identifier = this.pushAndPop(node.identifier);
 
-    this.append(`${annotations}${type} ${identifier}`)
+    this.append(`${annotations}${type} ${identifier}`);
+  }
+
+  visitBinaryExpression(node: Java.BinaryExpression) {
+    super.visitBinaryExpression(node);
+  }
+
+  visitAssignExpression(node: Java.AssignExpression) {
+    super.visitAssignExpression(node);
+    // TODO: This is wrong. Need to find a better way!
+    this.append(";");
   }
 
   visitArgumentDeclarationList(node: Java.ArgumentDeclarationList): void {

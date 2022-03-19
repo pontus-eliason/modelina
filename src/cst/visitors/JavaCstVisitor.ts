@@ -72,11 +72,11 @@ export class JavaCstVisitor extends AbstractCstVisitor {
     // Edge node
   }
 
-  visitGetter(node: Java.Getter): void {
+  visitFieldBackedGetter(node: Java.FieldBackedGetter): void {
     this.visitMethodDeclaration(node);
   }
 
-  visitSetter(node: Java.Setter): void {
+  visitFieldBackedSetter(node: Java.FieldBackedSetter): void {
     this.visitMethodDeclaration(node);
   }
 
@@ -114,7 +114,7 @@ export class JavaCstVisitor extends AbstractCstVisitor {
     }
   }
 
-  visitConstant(node: Java.Constant): void {
+  visitLiteral(node: Java.Literal): void {
     // Edge node
   }
 
@@ -185,17 +185,21 @@ export class JavaCstVisitor extends AbstractCstVisitor {
 
   visitAnnotation(node: Java.Annotation): void {
     node.type.visit(this);
-    node.pairs.visit(this);
+    if (node.pairs) {
+      node.pairs.visit(this);
+    }
   }
 
-  visitKeyValuePairList(node: Java.KeyValuePairList): void {
+  visitAnnotationKeyValuePairList(node: Java.AnnotationKeyValuePairList): void {
     for (const pair of node.children) {
       pair.visit(this);
     }
   }
 
-  visitKeyValuePair(node: Java.KeyValuePair): void {
-    node.key.visit(this);
+  visitAnnotationKeyValuePair(node: Java.AnnotationKeyValuePair): void {
+    if (node.key) {
+      node.key.visit(this);
+    }
     node.value.visit(this);
   }
 
@@ -264,5 +268,9 @@ export class JavaCstVisitor extends AbstractCstVisitor {
 
   visitFieldReference(node: Java.FieldReference): void {
     // Edge node
+  }
+
+  visitAssignExpression(node: Java.AssignExpression): void {
+    this.visitBinaryExpression(node);
   }
 }
