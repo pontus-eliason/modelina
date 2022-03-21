@@ -117,7 +117,7 @@ export class CommonModel {
   /**
    * Adds types to the existing model types.
    *
-   * Makes sure to only keep a single type incase of duplicates.
+   * Makes sure to only keep a single type in case of duplicates.
    *
    * @param types which types we should try and add to the existing output
    */

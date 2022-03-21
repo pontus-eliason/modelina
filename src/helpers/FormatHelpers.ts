@@ -110,8 +110,8 @@ export class FormatHelpers {
   /**
    * Ensures indentations are prepended to content.
    * @param {string} content to prepend the indentation.
-   * @param {number} size the number of indendations to use. 1 by default
-   * @param {IndentationTypes} type the type of indendations to use. SPACES by default.
+   * @param {number} size the number of indentations to use. 1 by default
+   * @param {IndentationTypes} type the type of indentations to use. SPACES by default.
    * @returns {string}
    */
   static indent(content = '', size = 1, type: IndentationTypes = IndentationTypes.SPACES): string {
@@ -131,7 +131,7 @@ export class FormatHelpers {
   }
 
   /**
-   * Get the indendation string based on how many and which type of indentation are requested.
+   * Get the indentation string based on how many and which type of indentation are requested.
    * @private
    * @param {number} size the number of indendations to use
    * @param {IndentationTypes} type the type of indendations to use. SPACES by default.

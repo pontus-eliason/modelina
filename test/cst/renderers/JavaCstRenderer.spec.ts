@@ -1,7 +1,7 @@
 import * as Java from '@cst/java';
 import { JavaCstRenderer } from '@cst/renderers/JavaCstRenderer';
 import { parse } from 'java-parser';
-import { TestVisitor } from './TestVisitor';
+import { TestVisitor } from '../TestVisitor';
 
 describe('JavaCstRenderer', () => {
   test('generate class', () => {

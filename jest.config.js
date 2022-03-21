@@ -18,6 +18,15 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper: {
     '^@cst/(.*)$': '<rootDir>/src/cst/$1',
+    '^@generators$': '<rootDir>/src/generators',
+    '^@generators/(.*)$': '<rootDir>/src/generators/$1',
+    '^@utils': '<rootDir>/src/utils',
+    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@models': '<rootDir>/src/models',
+    '^@models/(.*)$': '<rootDir>/src/models/$1',
+    '^@interpreter/(.*)$': '<rootDir>/src/interpreter/$1',
+    '^@helpers': '<rootDir>/src/helpers',
+    '^@helpers/(.*)$': '<rootDir>/src/helpers/$1',
   },
   testTimeout: 10000,
   collectCoverageFrom: [
